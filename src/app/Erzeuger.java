@@ -1,10 +1,11 @@
 package app;
 
 public class Erzeuger extends Maschine {
-	private Produkt erzeugnis;
+	protected Produkt erzeugnis;
 	
-	public Erzeuger(String name, double kosten) {
+	public Erzeuger(String name, double kosten, Produkt erzeugnis) {
 		super(name, kosten);
+		this.erzeugnis = erzeugnis;
 	}
 	
 	// Diese Methode überprüft zunächst, ob das Testguthaben

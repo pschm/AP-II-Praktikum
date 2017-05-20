@@ -6,8 +6,8 @@ public class Verwerter extends Erzeuger {
 	Produkt abhaenigkeit;
 	int anzahl;
 	
-	public Verwerter(String name, double kosten, int anzahl, Produkt abhaenigkeit) {
-		super(name, kosten);
+	public Verwerter(String name, double kosten, int anzahl, Produkt erzeugnis, Produkt abhaenigkeit) {
+		super(name, kosten, erzeugnis);
 		this.anzahl = anzahl;
 		this.abhaenigkeit = abhaenigkeit;
 	}
