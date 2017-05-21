@@ -35,8 +35,8 @@ public class Warenspeicher {
 		if(n < anzahl) anzahl = n;
 		
 		for(Produkt p : produkte) {
-			// ggf. Anzahl > 0 in eigene Abfrage um redundante durchläufe zu vermeiden
-			if(p.getName() == unerwuenschtesProdukt && anzahl > 0) {
+			if(anzahl <= 0) return; // wenn keine Produkte mehr vorhanden sind, suche abbrechen
+			if(p.getName() == unerwuenschtesProdukt) {
 				produkte.remove(p);
 				anzahl--;
 			}

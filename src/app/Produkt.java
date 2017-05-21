@@ -6,8 +6,8 @@ public class Produkt {
 	private double verkaufswert;
 
 	public Produkt(String name, double kosten, double verkaufswert) {
-		this.name = name;
-		this.kosten = kosten;
+		this.name         = name;
+		this.kosten       = kosten;
 		this.verkaufswert = verkaufswert;
 	}
 	
@@ -15,24 +15,12 @@ public class Produkt {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public double getKosten() {
 		return kosten;
 	}
 
-	public void setKosten(double kosten) {
-		this.kosten = kosten;
-	}
-
 	public double getVerkaufswert() {
 		return verkaufswert;
-	}
-
-	public void setVerkaufswert(double verkaufswert) {
-		this.verkaufswert = verkaufswert;
 	}
 
 }

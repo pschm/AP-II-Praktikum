@@ -10,7 +10,19 @@ public class Fabrik {
 	private ArrayList<Maschine> maschine;
 	
 	public Fabrik() {
-		maschine = new ArrayList<Maschine>();
+		maschine      = new ArrayList<Maschine>();
+		warenspeicher = new Warenspeicher();
+		guthaben      = 0.0;
+		testguthaben  = 0.0;
+		name 		  = "defaultFabrik";
+	}
+	
+	public Fabrik(Warenspeicher warenspeicher, double guthaben, double testguthaben,
+			String name) {
+		this.warenspeicher = warenspeicher;
+		this.guthaben      = guthaben;
+		this.testguthaben  = testguthaben;
+		this.name          = name;
 	}
 	
 	public Warenspeicher getWarenspeicher() {
@@ -26,12 +38,12 @@ public class Fabrik {
 	}
 
 	public void fuegeMaschineHinzu(Maschine maschine) {
-		// TODO call setMaschine
+		maschine.setFabrik(this);
 		this.maschine.add(maschine);
 	}
 	
 	public void entferneMaschine(int index) {
-		// Abfragen, ob dieser Index überhaupt existiert?
+		if(maschine.size() < index) return; // Abfragen, ob dieser Index überhaupt existiert?
 		maschine.remove(index);
 	}
 	
