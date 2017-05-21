@@ -8,21 +8,21 @@ public class Erzeuger extends Maschine {
 		this.erzeugnis = erzeugnis;
 	}
 	
-	// Diese Methode überprüft zunächst, ob das Testguthaben
-	// der Fabrik für die Herstellung des Produkts ausreichend ist.
-	// Ist das der Fall, so wird das erzeugnis dem Warenspeicher der
-	// Fabrik hinzugefügt. Andernfalls wird eine Fehlermeldung auf
-	// der Konsole ausgegeben.
-	// Bsp. Ausgabe: "Apel konnte aufrung fehlenden Guthabens nicht
-	// erzeugt werden."
 	public void produktErzeugen() {
-		//
+		// Testguthaben ueberpruefen
+		if(fabrik.getTestguthaben() < erzeugnis.getKosten()) {
+			System.out.println("Der Erzeuger: "+ this.name + " konnte keine "
+						+ erzeugnis.getName() + " herstellen, da das Guthaben nicht ausreicht.");
+			return;
+		}
+		
+		// erzeugnis dem Warenspeicher der Fabrik hinzufuegen
+		fabrik.getWarenspeicher().fuegeProduktHinzu(erzeugnis);
 	}
 	
 	public void maschineStarten() {
 		super.maschineStarten();
-		erzeugnis = new Produkt("Apfel", 0.815, 42.0);
-		// TODO arbeitArbeit
+		this.produktErzeugen();
 		System.out.println(erzeugnis.getName() + " wurde produziert.");
 	}
 	

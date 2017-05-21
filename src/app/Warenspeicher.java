@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Warenspeicher {
 	ArrayList<Produkt> produkte;
@@ -21,34 +22,42 @@ public class Warenspeicher {
 		return anzahl;
 	}
 	
+	public int anzahlImSpeicher(Produkt gesuchtesProdukt) {
+		return this.anzahlImSpeicher(gesuchtesProdukt.getName());
+	}
+	
 	public void entferneProdukt(String unerwuenschtesProdukt) {
-		for(Produkt p : produkte) {
-			if(p.getName() == unerwuenschtesProdukt) {
-				produkte.remove(p);
-				return;
-			}
-		}
+		entferneProdukt(unerwuenschtesProdukt, 1);
 	}
 	
 	public void entferneProdukt(String unerwuenschtesProdukt, int anzahl) {
 		int n = anzahlImSpeicher(unerwuenschtesProdukt);
 		if(n < anzahl) anzahl = n;
 		
-		for(Produkt p : produkte) {
-			if(anzahl <= 0) return; // wenn keine Produkte mehr vorhanden sind, suche abbrechen
+		Iterator<Produkt> it = produkte.iterator();
+		while(it.hasNext() && anzahl > 0) {
+			Produkt p = it.next();
 			if(p.getName() == unerwuenschtesProdukt) {
-				produkte.remove(p);
+				it.remove(); // produkte.remove(p);
 				anzahl--;
 			}
 		}
 	}
 	
+	public void entferneProdukt(Produkt unerwuenschtesProdukt, int anzahl) {
+		entferneProdukt(unerwuenschtesProdukt.getName(), anzahl);
+	}
+	
 	public double warenVerkaufen() {
 		double summe = 0.0;
-		for(Produkt p : produkte) {
+
+		Iterator<Produkt> it = produkte.iterator();
+		while(it.hasNext()) {
+			Produkt p = it.next();
 			summe += p.getVerkaufswert();
-			produkte.remove(p);
+			it.remove();
 		}
+		
 		return summe;
 	}
 	

@@ -9,16 +9,9 @@ public class Fabrik {
 	private String name;
 	private ArrayList<Maschine> maschine;
 	
-	public Fabrik() {
-		maschine      = new ArrayList<Maschine>();
-		warenspeicher = new Warenspeicher();
-		guthaben      = 0.0;
-		testguthaben  = 0.0;
-		name 		  = "defaultFabrik";
-	}
-	
 	public Fabrik(Warenspeicher warenspeicher, double guthaben, double testguthaben,
 			String name) {
+		this.maschine      = new ArrayList<Maschine>();
 		this.warenspeicher = warenspeicher;
 		this.guthaben      = guthaben;
 		this.testguthaben  = testguthaben;
@@ -53,9 +46,9 @@ public class Fabrik {
 	
 	public double firmaTesten(int rundenanzahl) {
 		testguthaben = guthaben;
+		
 		for(Maschine m : maschine) {
 			testguthaben -= m.getKosten();
-			m.setFabrik(this);
 		}
 		
 		// Produktionsprozess
@@ -66,7 +59,7 @@ public class Fabrik {
 		}
 		
 		// Verkauf der Waren und Gutschreibung auf das Testguthaben
-		// TODO realisierung s.o.
+		testguthaben += warenspeicher.warenVerkaufen();
 		
 		// Rueckgabe des neuen Guthabens
 		return testguthaben;

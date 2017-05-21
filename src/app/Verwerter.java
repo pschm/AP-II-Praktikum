@@ -3,8 +3,8 @@ package app;
 // Verwerter ist eine Maschine, die zur Verarbeitung von Produkten
 // dient, um so neue Produkte zu erstellen. (z.B. aus Äpfeln wird Apfelsaft)
 public class Verwerter extends Erzeuger {
-	Produkt abhaenigkeit;
-	int anzahl;
+	private Produkt abhaenigkeit;
+	private int anzahl;
 	
 	public Verwerter(String name, double kosten, int anzahl, Produkt erzeugnis, Produkt abhaenigkeit) {
 		super(name, kosten, erzeugnis);
@@ -15,7 +15,7 @@ public class Verwerter extends Erzeuger {
 	// Diese Methode prüft, ob genügend Produkte für die
 	// Verarbeitung vorhanden sind.
 	public boolean checkAbhaengigkeit() {
-		return true;
+		return anzahl >= fabrik.getWarenspeicher().anzahlImSpeicher(erzeugnis);
 	}
 	
 	// Diese Methode zur Erzeugung von Produkten soll so erweitert werden, dass die zu
@@ -26,6 +26,14 @@ public class Verwerter extends Erzeuger {
 	// Bsp. Ausgabe: "Apfelpresse hat die Arbeit aufgenommen."
 	// "Apfelsaft wurde produziert."
 	public void produktErzeugen() {
-		System.out.println(name + " hat die Arbeit aufgenommen.");
+		if(!this.checkAbhaengigkeit()) {
+			System.out.println("Es sind nicht genuegend " + abhaenigkeit.getName() + " im Speicher vorhanden.");
+			System.out.println(erzeugnis.getName() + " konnte nicht hergestellt werden.");
+			return;
+		}
+		
+		fabrik.getWarenspeicher().entferneProdukt(abhaenigkeit, anzahl); 
+		
+		super.produktErzeugen();
 	}
 }
