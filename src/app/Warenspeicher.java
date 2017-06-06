@@ -3,6 +3,10 @@ package app;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Die Klasse Warenspeicher verwaltet den Warenspeicher einer Fabrik und listet 
+ * mit hilfe der Eigenschaft produkte alle Erzeugnisse der Fabrik auf
+ */
 public class Warenspeicher {
 	ArrayList<Produkt> produkte;
 	
@@ -10,10 +14,18 @@ public class Warenspeicher {
 		produkte = new ArrayList<Produkt>();
 	}
 	
+	/**
+	 * 
+	 * @param produkt welches dem Warenspeicher hinzugefügt wird
+	 */
 	public void fuegeProduktHinzu(Produkt produkt) {
 		produkte.add(produkt);
 	}
 	
+	/**
+	 * @param gesuchtesProdukt : Name des gesuchten Produkts
+	 * @return int : gibt die Anzahl der im Speicher vorhandenen Produkte zurück
+	 */
 	public int anzahlImSpeicher(String gesuchtesProdukt) {
 		int anzahl = 0;
 		for(Produkt p : produkte) {
@@ -26,14 +38,16 @@ public class Warenspeicher {
 		return this.anzahlImSpeicher(gesuchtesProdukt.getName());
 	}
 	
-	public void entferneProdukt(String unerwuenschtesProdukt) {
-		entferneProdukt(unerwuenschtesProdukt, 1);
-	}
 	
+	/**
+	 * Diese Methode durchsucht den Warenspeicher nach einem gegebenen Produkt
+	 * und löscht der Anzahl entsprechend aus dem Speicher.
+	 * 
+	 * @param unerwuenschtesProdukt : Name des zu entfernenden Produkts
+	 * @param anzahl : Menge des zu entfernenden Produkts
+	 */
 	public void entferneProdukt(String unerwuenschtesProdukt, int anzahl) {
-		int n = anzahlImSpeicher(unerwuenschtesProdukt);
-		if(n < anzahl) anzahl = n;
-		
+		// ggf. abfragen ob genügend Produkte im Speicher sind
 		Iterator<Produkt> it = produkte.iterator();
 		while(it.hasNext() && anzahl > 0) {
 			Produkt p = it.next();
@@ -44,19 +58,28 @@ public class Warenspeicher {
 		}
 	}
 	
+	public void entferneProdukt(String unerwuenschtesProdukt) {
+		entferneProdukt(unerwuenschtesProdukt, 1);
+	}
+	
 	public void entferneProdukt(Produkt unerwuenschtesProdukt, int anzahl) {
 		entferneProdukt(unerwuenschtesProdukt.getName(), anzahl);
 	}
 	
+	/**
+	 * Diese Methode leert den gesamten Warenspeicher und berechnet den 
+	 * Verkaufswert der Waren, welcher auch zurückgegeben wird.
+	 * @return summe : Gesamter Verkaufswert aller Waren des Warenspeichers 
+	 */
 	public double warenVerkaufen() {
 		double summe = 0.0;
 
-		Iterator<Produkt> it = produkte.iterator();
-		while(it.hasNext()) {
-			Produkt p = it.next();
+		// Produkte aufsummieren
+		for(Produkt p : produkte)
 			summe += p.getVerkaufswert();
-			it.remove();
-		}
+		
+		// ArrayList leeren
+		produkte.clear();
 		
 		return summe;
 	}

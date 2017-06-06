@@ -1,7 +1,10 @@
 package app;
 
-// Verwerter ist eine Maschine, die zur Verarbeitung von Produkten
-// dient, um so neue Produkte zu erstellen. (z.B. aus Äpfeln wird Apfelsaft)
+/**
+ * Diese Klasse biltet die Grundstruktur für einen Verwerter,
+ * eine Maschine, die zur Verarbeitung von Produkten dient und
+ * somit neue Produkte erstellt (aus Äpfeln wird Apfelsaft).
+ */
 public class Verwerter extends Erzeuger {
 	private Produkt abhaenigkeit;
 	private int anzahl;
@@ -12,19 +15,21 @@ public class Verwerter extends Erzeuger {
 		this.abhaenigkeit = abhaenigkeit;
 	}
 	
-	// Diese Methode prüft, ob genügend Produkte für die
-	// Verarbeitung vorhanden sind.
+	/**
+	 * Diese Methode prüft, ob genügend Produkte für die
+	 * Verarbeitung vorhanden sind und gibt das Ergebnis zurück (@return)
+	 */
 	public boolean checkAbhaengigkeit() {
-		return anzahl >= fabrik.getWarenspeicher().anzahlImSpeicher(erzeugnis);
+		return anzahl <= fabrik.getWarenspeicher().anzahlImSpeicher(abhaenigkeit);
 	}
 	
-	// Diese Methode zur Erzeugung von Produkten soll so erweitert werden, dass die zu
-	// verarbeitenden Produkte aus dem Warenspeicher entnommen werden. Achtung: Es
-	// müssen genügend erzeugte Produkte vorhanden sein, bevor sie verarbeitet werden
-	// können. Außerdem benötigen Sie genügend Guthaben, um die Verarbeitung
-	// auszuführen.
-	// Bsp. Ausgabe: "Apfelpresse hat die Arbeit aufgenommen."
-	// "Apfelsaft wurde produziert."
+	/**
+	 * Diese Methode zur Erzeugung von Produkten prüft erst, ob genügend Produkte
+	 * für die Weiterverarbeitung im Warenspeicher vorhanden sind und das Guthaben
+	 * zur erzeugung des neuen Produkt ausreicht.
+	 * Ist dies der Fall, wird ein neues Produkt erzeugt und dem Warenspeicher hinzugefügt.
+	 * Des Weiteren werden die Produktionskosten vom Guthaben abgezoegen.
+	 */
 	public void produktErzeugen() {
 		if(!this.checkAbhaengigkeit()) {
 			System.out.println("Es sind nicht genuegend " + abhaenigkeit.getName() + " im Speicher vorhanden.");
@@ -33,6 +38,9 @@ public class Verwerter extends Erzeuger {
 		}
 		
 		fabrik.getWarenspeicher().entferneProdukt(abhaenigkeit, anzahl); 
+		
+		// guthaben verringern
+		fabrik.testguthabenReduzieren(erzeugnis.getKosten());
 		
 		super.produktErzeugen();
 	}
