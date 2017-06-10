@@ -15,7 +15,6 @@ public class Warenspeicher {
 	}
 	
 	/**
-	 * 
 	 * @param produkt welches dem Warenspeicher hinzugefügt wird
 	 */
 	public void fuegeProduktHinzu(Produkt produkt) {
@@ -74,9 +73,21 @@ public class Warenspeicher {
 	public double warenVerkaufen() {
 		double summe = 0.0;
 
+		System.out.println("\nWarenkorb vor dem Verkauf: ");
+		
 		// Produkte aufsummieren
-		for(Produkt p : produkte)
-			summe += p.getVerkaufswert();
+		for(Produkt p : produkte) {
+			double netto = p.getVerkaufswert() * 0.81;
+			double mwst  = p.getVerkaufswert() * 0.19;
+			
+			System.out.println("Produkt: " + p.getName());
+			System.out.println("Brutto:  " + p.getVerkaufswert());
+			System.out.println("Netto:   " + netto);
+			System.out.println("MwSt:    " + mwst);
+			System.out.println("-----");
+			
+			summe += netto;
+		}
 		
 		// ArrayList leeren
 		produkte.clear();

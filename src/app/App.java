@@ -17,7 +17,7 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		// Fabrik
-		Fabrik f = new Fabrik(new Warenspeicher(), 1000.0, 1000.0, "PC-MasterRace");
+		Fabrik f = new Fabrik(new Warenspeicher(), 1000.0, 1000.0, "Obst");
 		
 		// Maschinen
 		Erzeuger birnenpfluecker = new Erzeuger("Birnenpfluecker", 500.0, new Produkt("Brine", 0.815, 42.0));
