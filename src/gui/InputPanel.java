@@ -1,5 +1,8 @@
 package gui;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,49 +13,54 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import app.Erzeuger;
+import app.Maschine;
+import app.Produkt;
+import app.Verwerter;
+
 @SuppressWarnings("serial") // TODO Why?
 public class InputPanel extends JPanel {
 
 	private PanelManager panelManager;
 	
 	// JLabel
-	private JLabel l_produktName;
-	private JLabel l_produktKosten;
-	private JLabel l_produktVerkaufswert;
-	private JLabel l_maschinenName;
-	private JLabel l_maschinenKosten;
-	private JLabel l_maschinenErzeugnis;
-	private JLabel l_anzahlBedingungen;
-	private JLabel l_testguthaben;
-	private JLabel l_testguthabenBeschreibung;
-	private JLabel l_anzahlTestrunden;
+	private JLabel l_produktName              = new JLabel("Name:");
+	private JLabel l_produktKosten            = new JLabel("Produktionskosten:");
+	private JLabel l_produktVerkaufswert      = new JLabel("Verkaufswert:");
+	private JLabel l_maschinenName            = new JLabel("Name:");
+	private JLabel l_maschinenKosten          = new JLabel("Kosten:");
+	private JLabel l_maschinenErzeugnis       = new JLabel("Erzeugnis:");
+	private JLabel l_anzahlBedingungen        = new JLabel("Anzahl:");
+	private JLabel l_testguthaben             = new JLabel("0.0 €");
+	private JLabel l_testguthabenBeschreibung = new JLabel("Testguthaben: ");
+	private JLabel l_anzahlTestrunden		  = new JLabel("Anzahl der Runden:");
 	
-	// JLabel (Überschriften)
+	// JLabel (headers)
 	private JLabel l_ueberschriftProdukte    = new JLabel("Produkt");
 	private JLabel l_ueberschriftMaschine    = new JLabel("Maschine");
 	private JLabel l_ueberschriftFabriktests = new JLabel("Fabriktests");
 	
 	// JTextfield
-	private JTextField tf_produktName;
-	private JTextField tf_produktKosten;
-	private JTextField tf_produktVerkaufswert;
-	private JTextField tf_maschinenName;
-	private JTextField tf_maschinenKosten;
-	private JTextField tf_anzahlBedingungen;
-	private JTextField tf_anzahlTestrunden;
+	private JTextField tf_produktName         = new JTextField("");
+	private JTextField tf_produktKosten       = new JTextField("");
+	private JTextField tf_produktVerkaufswert = new JTextField("");
+	private JTextField tf_maschinenName       = new JTextField("");
+	private JTextField tf_maschinenKosten     = new JTextField("");
+	private JTextField tf_anzahlBedingungen   = new JTextField("");
+	private JTextField tf_anzahlTestrunden    = new JTextField("1");
 	
 	// JComboBox
-	private JComboBox <String> cb_erzeugnisliste;
-	private JComboBox <String> cb_bedingungsliste;
+	private JComboBox <String> cb_erzeugnisliste  = new JComboBox<String>();
+	private JComboBox <String> cb_bedingungsliste = new JComboBox<String>();
 	
 	// JCheckBox
-	private JCheckBox chb_abhaengigkeit;
+	private JCheckBox chb_abhaengigkeit = new JCheckBox("Bedingung?");
 	
 	// JButton
-	private JButton btn_produkt  = new JButton("Produkt anlegen");
-	private JButton btn_maschine = new JButton("Maschine anlegen");
-	private JButton btn_fabrikStart;
-	private JButton btn_fabrikReset;
+	private JButton btn_produkt     = new JButton("Produkt anlegen");
+	private JButton btn_maschine    = new JButton("Maschine anlegen");
+	private JButton btn_fabrikStart = new JButton("Test starten");
+	private JButton btn_fabrikReset = new JButton("Fabrik zurücksetzen");
 	
 	
 	public InputPanel(PanelManager panelManager) {
@@ -65,6 +73,60 @@ public class InputPanel extends JPanel {
 	 * Methode zur erstellung der GUI
 	 */
 	private void buildGui() {
+		
+		// LayoutTest
+//		JButton b = new JButton("Just fake Button");
+//		Dimension buttonSize = b.getPreferredSize();
+//		setPreferredSize(new Dimension(new Dimension((int)(buttonSize.getWidth() * 2.5)+20,
+//                (int)(buttonSize.getHeight() * 3.5)+20 * 2)));
+		
+		// --- Layout ---
+//		// Test
+//		for(int i = 0; i < 32; i++) {
+//			add(new JButton("Btn: " + (i+1)));
+//		}
+		setLayout(new GridLayout(16, 2));
+		
+		// Produkt
+		add(l_ueberschriftProdukte);
+		add(new JLabel(" ")); // empty TODO bessere Loesung?
+		add(l_produktName);
+		add(tf_produktName);
+		add(l_produktKosten);
+		add(tf_produktKosten);
+		add(l_produktVerkaufswert);
+		add(tf_produktVerkaufswert);
+		add(new JLabel(" "));
+		add(btn_produkt);
+		
+		// Maschine
+		add(l_ueberschriftMaschine);
+		add(new JLabel(" "));
+		add(l_maschinenName);
+		add(tf_maschinenName);
+		add(l_maschinenKosten);
+		add(tf_maschinenKosten);
+		add(l_maschinenErzeugnis);
+		add(cb_erzeugnisliste);
+		add(chb_abhaengigkeit);
+		add(cb_bedingungsliste);
+		add(l_anzahlBedingungen);
+		add(tf_anzahlBedingungen);
+		add(new JLabel(" "));
+		add(btn_maschine);
+		
+		// Fabriktests
+		add(l_ueberschriftFabriktests);
+		add(new JLabel(" "));
+		add(l_testguthabenBeschreibung);
+		add(l_testguthaben);
+		add(l_anzahlTestrunden);
+		add(tf_anzahlTestrunden);
+		add(btn_fabrikReset);
+		add(btn_fabrikStart);
+		
+		
+		// --- ActionListener für alle Buttons ---
 		/**
 		 * Fügen Sie dem JButton zum Anlegen eines Produkts einen ActionListener hinzu.
 		 * Wird auf diesen gedrückt, so soll mithilfe der Textfeldeingaben
@@ -74,7 +136,11 @@ public class InputPanel extends JPanel {
 		btn_produkt.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO 
+				panelManager.addOrReplaceProduktentwurf(
+						new Produkt(tf_produktName.getText(),
+							Double.parseDouble(tf_produktKosten.getText()),
+							Double.parseDouble(tf_produktVerkaufswert.getText()))
+				);
 			}
 		});
 		
@@ -91,7 +157,24 @@ public class InputPanel extends JPanel {
 		btn_maschine.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				Maschine m;
+				if(chb_abhaengigkeit.isSelected()) {
+					// Verwerter
+					m = new Verwerter(tf_maschinenName.getText(),
+							Double.parseDouble(tf_maschinenKosten.getText()),
+							Integer.parseInt(tf_anzahlBedingungen.getText()),
+							panelManager.getProduktEntwuerfe().get(cb_erzeugnisliste.getSelectedIndex()),
+							panelManager.getProduktEntwuerfe().get(cb_bedingungsliste.getSelectedIndex())
+					);
+				} else {
+					// Erzeuger
+					m = new Erzeuger(tf_maschinenName.getText(),
+							Double.parseDouble(tf_maschinenKosten.getText()),
+							panelManager.getProduktEntwuerfe().get(cb_erzeugnisliste.getSelectedIndex())
+					);
+				}
+				
+				panelManager.addOrReplaceMaschinenentwurf(m);
 			}
 		});
 		
@@ -103,8 +186,7 @@ public class InputPanel extends JPanel {
 		btn_fabrikStart.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelManager.start();	
-				// TODO s.o.
+				panelManager.startFabrik(Integer.parseInt(tf_anzahlTestrunden.getText()));
 			}
 		});
 		
@@ -123,7 +205,18 @@ public class InputPanel extends JPanel {
 	 * des Testguthabens auf das aktuelle Testguthaben gesetzt werden.
 	 */
 	public void updateData() {
-		// TODO
+		// ComboBoxen leeren
+		cb_bedingungsliste.removeAllItems();
+		cb_erzeugnisliste.removeAllItems();
+		
+		// ComboBoxen neu fuellen
+		for(Produkt p : panelManager.getProduktEntwuerfe()) {
+			cb_bedingungsliste.addItem(p.getName());
+			cb_erzeugnisliste.addItem(p.getName());
+		}
+		
+		// Testguthaben setzen
+		l_testguthaben.setText(panelManager.getTestguthaben() + " €");
 	}
 	
 	

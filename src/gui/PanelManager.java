@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -17,8 +18,14 @@ public class PanelManager {
 	private MaschinenPanel maschinenPanel;
 	private AuswahlPanel auswahlPanel;
 
-	public PanelManager() {
-		// TODO init panels
+	public PanelManager(Fabrik f) {
+		inputPanel     = new InputPanel(this);
+		maschinenPanel = new MaschinenPanel(this);
+		auswahlPanel   = new AuswahlPanel(this);
+		
+		produktEntwuerfe   = new ArrayList<Produkt>();
+		maschinenEntwuerfe = new ArrayList<Maschine>();
+		fabrik = f;
 	}
 	
 	public ArrayList<Produkt> getProduktEntwuerfe() {
@@ -34,15 +41,19 @@ public class PanelManager {
 	 * auf der linken Seite ein.
 	 */
 	public void start() {
-		JFrame f = new JFrame();
-		f.setSize(1000, 500);
-		f.setVisible(true);
+		JFrame mainFrame = new JFrame();
+		mainFrame.setSize(1000, 500);
+		mainFrame.setVisible(true);
 		
-		// TODO inputPanel auf die linke Seite des Frames einbetten.
+		mainFrame.setLayout(new BorderLayout());
+		mainFrame.add(inputPanel, BorderLayout.WEST);
+		mainFrame.add(maschinenPanel, BorderLayout.EAST);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// TODO maschinenPanel auf die rechte Seite des Frames einbetten.
-		
-		// TODO zweites Fenster erstellen und auswahlPanel einbetten
+		JFrame selectionFrame = new JFrame();
+		selectionFrame.setVisible(true);
+		selectionFrame.setSize(300, 200);
+		selectionFrame.add(auswahlPanel);
 	}
 
 	/**
@@ -52,6 +63,19 @@ public class PanelManager {
 	 * wird dieses lediglich ausgetauscht anstatt das neue Produkt hinzuzufügen.
 	 */
 	public void addOrReplaceProduktentwurf(Produkt produkt) {
+		boolean contains = false;
+		
+		for(int i = 0; i < produktEntwuerfe.size(); i++) {
+			if(produktEntwuerfe.get(i).getName() == produkt.getName()) {
+				produktEntwuerfe.add(i, produkt);
+				contains = true;
+				break;
+			}
+		}
+		
+		// TODO bugfix --> multiple products in ArrayList
+		if( !contains ) produktEntwuerfe.add(produkt);
+				
 		inputPanel.updateData();
 	}
 	
@@ -59,6 +83,19 @@ public class PanelManager {
 	 * Identisch zu der addOrReplaceProduktentwurf, lediglich mit der Maschinenliste. 
 	 */
 	public void addOrReplaceMaschinenentwurf(Maschine maschine) {
+		boolean contains = false;
+		
+		for(int i = 0; i < produktEntwuerfe.size(); i++) {
+			if(maschinenEntwuerfe.get(i).getName() == maschine.getName()) {
+				maschinenEntwuerfe.add(i, maschine);
+				contains = true;
+				break;
+			}
+		}
+		
+		if( !contains )
+			maschinenEntwuerfe.add(maschine);
+		
 		maschinenPanel.updateData();
 		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
 	}
@@ -71,6 +108,8 @@ public class PanelManager {
 	 * Diese Methode fügt den Maschinenentwurf an der Position @param index der Fabrik hinzu.
 	 */
 	public void addMaschineToFabrik(int index) {
+		fabrik.fuegeMaschineHinzu(maschinenEntwuerfe.get(index));
+		
 		inputPanel.updateData();
 		maschinenPanel.updateData();
 		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
@@ -83,6 +122,8 @@ public class PanelManager {
 	 * und nicht die position in den Maschinenentwürfen). 
 	 */
 	public void removeMaschineFromFabrik(int index) {
+		fabrik.entferneMaschine(index);
+		
 		inputPanel.updateData();
 		maschinenPanel.updateData();
 		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
@@ -94,7 +135,12 @@ public class PanelManager {
 	 */
 	public void resetFabrik() {
 		fabrik.resetFabrik();
+		
 		auswahlPanel.updateData();
+	}
+	
+	public void startFabrik(int runden) {
+		fabrik.firmaTesten(runden);
 	}
 	
 	/**

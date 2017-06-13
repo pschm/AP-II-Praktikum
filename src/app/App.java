@@ -18,15 +18,13 @@ public class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		PanelManager pm = new PanelManager();
+		// Fabriktest
+		// Fabrik
+		Fabrik baum = new Fabrik(new Warenspeicher(), 1000.0, "Baum");
+		
+		PanelManager pm = new PanelManager(baum);
 		pm.start();
 		
-		System.out.println("Hello World");
-		// Fabriktest
-		
-//		// Fabrik
-//		Fabrik f = new Fabrik(new Warenspeicher(), 1000.0, "Obst");
-//		
 //		// Maschinen
 //		Erzeuger birnenpfluecker = new Erzeuger("Birnenpfluecker", 500.0, new Produkt("Brine", 0.815, 42.0));
 //		Erzeuger apfelpfluecker  = new Erzeuger("Apfelpluecker", 450.0, new Produkt("Apfel", 0.415, 21.0));
