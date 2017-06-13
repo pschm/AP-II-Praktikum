@@ -1,5 +1,7 @@
 package app;
 
+import gui.PanelManager;
+
 /**
  * Anwendung zur Simulation einer Fabrik (Aufbau und Inbetriebnahme).
  * 
@@ -16,22 +18,28 @@ public class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Fabrik
-		Fabrik f = new Fabrik(new Warenspeicher(), 1000.0, 1000.0, "Obst");
+		PanelManager pm = new PanelManager();
+		pm.start();
 		
-		// Maschinen
-		Erzeuger birnenpfluecker = new Erzeuger("Birnenpfluecker", 500.0, new Produkt("Brine", 0.815, 42.0));
-		Erzeuger apfelpfluecker  = new Erzeuger("Apfelpluecker", 450.0, new Produkt("Apfel", 0.415, 21.0));
-		Verwerter apfelpresse    = new Verwerter("Apfelpresse", 2.500, 2, new Produkt("Apfelsaft", 16.0, 25.0), new Produkt("Apfel", 0.415, 21.0));
+		System.out.println("Hello World");
+		// Fabriktest
 		
-		// Fabrik bestuecken
-		f.fuegeMaschineHinzu(birnenpfluecker);
-		f.fuegeMaschineHinzu(apfelpfluecker);
-		f.fuegeMaschineHinzu(apfelpresse);
-		
-		// Fabrik testen
-		double testguthaben = f.firmaTesten(3);
-		System.out.println("Das aktuelle Guthaben der Fabrik " + f.getName() + " betraegt: " + testguthaben );
+//		// Fabrik
+//		Fabrik f = new Fabrik(new Warenspeicher(), 1000.0, "Obst");
+//		
+//		// Maschinen
+//		Erzeuger birnenpfluecker = new Erzeuger("Birnenpfluecker", 500.0, new Produkt("Brine", 0.815, 42.0));
+//		Erzeuger apfelpfluecker  = new Erzeuger("Apfelpluecker", 450.0, new Produkt("Apfel", 0.415, 21.0));
+//		Verwerter apfelpresse    = new Verwerter("Apfelpresse", 2.500, 2, new Produkt("Apfelsaft", 16.0, 25.0), new Produkt("Apfel", 0.415, 21.0));
+//		
+//		// Fabrik bestuecken
+//		f.fuegeMaschineHinzu(birnenpfluecker);
+//		f.fuegeMaschineHinzu(apfelpfluecker);
+//		f.fuegeMaschineHinzu(apfelpresse);
+//		
+//		// Fabrik testen
+//		double testguthaben = f.firmaTesten(3);
+//		System.out.println("Das aktuelle Guthaben der Fabrik " + f.getName() + " betraegt: " + testguthaben );
 	}
 
 }

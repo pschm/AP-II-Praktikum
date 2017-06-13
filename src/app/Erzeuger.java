@@ -11,6 +11,11 @@ public class Erzeuger extends Maschine {
 	public Erzeuger(String name, double kosten, Produkt erzeugnis) {
 		super(name, kosten);
 		this.erzeugnis = erzeugnis;
+		this.typ	   = typen[1]; // Erzeuger
+	}
+	
+	public Produkt getErzeugnis() {
+		return erzeugnis;
 	}
 	
 	/**
@@ -32,6 +37,7 @@ public class Erzeuger extends Maschine {
 		fabrik.testguthabenReduzieren(erzeugnis.getKosten());
 	}
 	
+	@Override
 	public void maschineStarten() {
 		super.maschineStarten();
 		this.produktErzeugen();

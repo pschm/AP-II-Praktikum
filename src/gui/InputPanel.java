@@ -10,13 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial") // TODO Why?
 public class InputPanel extends JPanel {
 
-	/**
-	 * TODO finde heraus WAURUM?
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	private PanelManager panelManager;
 	
 	// JLabel

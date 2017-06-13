@@ -11,8 +11,17 @@ public class Verwerter extends Erzeuger {
 	
 	public Verwerter(String name, double kosten, int anzahl, Produkt erzeugnis, Produkt abhaenigkeit) {
 		super(name, kosten, erzeugnis);
-		this.anzahl = anzahl;
+		this.anzahl       = anzahl;
 		this.abhaenigkeit = abhaenigkeit;
+		this.typ          = typen[2];
+	}
+	
+	public Produkt getAbhaenigkeit() {
+		return abhaenigkeit;
+	}
+	
+	public int getAnzahl() {
+		return anzahl;
 	}
 	
 	/**
@@ -30,6 +39,7 @@ public class Verwerter extends Erzeuger {
 	 * Ist dies der Fall, wird ein neues Produkt erzeugt und dem Warenspeicher hinzugefügt.
 	 * Des Weiteren werden die Produktionskosten vom Guthaben abgezoegen.
 	 */
+	@Override
 	public void produktErzeugen() {
 		if(!this.checkAbhaengigkeit()) {
 			System.out.println("Es sind nicht genuegend " + abhaenigkeit.getName() + " im Speicher vorhanden.");

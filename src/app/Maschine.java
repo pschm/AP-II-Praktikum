@@ -7,6 +7,10 @@ public class Maschine {
 	protected String name;
 	protected double kosten;
 	protected Fabrik fabrik;
+
+	protected String typ;
+	
+	public static String [] typen = {"Standard", "Erzeuger", "Verwerter"};
 	
 	/**
 	 * Der Konstruktor setzt @param name und @param kosten für die Maschine
@@ -16,9 +20,10 @@ public class Maschine {
 	public Maschine(String name, double kosten) {
 		this.name   = name;
 		this.kosten = kosten;
+		typ			= typen[0];
 		fabrik      = null;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -29,6 +34,10 @@ public class Maschine {
 
 	public void setFabrik(Fabrik fabrik) {
 		this.fabrik = fabrik;
+	}
+	
+	public String getTyp() {
+		return typ;
 	}
 
 	public void maschineStarten() {

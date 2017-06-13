@@ -17,13 +17,16 @@ public class Fabrik {
 	 * @param guthaben, @param testguthaben, sowie einen @param name erhält
 	 * Des Weiteren wird die Eigenschaft maschine initialisiert. Bei Erstellung befinden sich keine Maschinen in der Fabrik.
 	 */
-	public Fabrik(Warenspeicher warenspeicher, double guthaben, double testguthaben,
-			String name) {
+	public Fabrik(Warenspeicher warenspeicher, double guthaben, String name) {
 		this.maschine      = new ArrayList<Maschine>();
 		this.warenspeicher = warenspeicher;
 		this.guthaben      = guthaben;
-		this.testguthaben  = testguthaben;
 		this.name          = name;
+		testguthaben       = guthaben;		
+	}
+	
+	public ArrayList<Maschine> getMaschine() {
+		return maschine;
 	}
 	
 	public Warenspeicher getWarenspeicher() {
@@ -37,20 +40,33 @@ public class Fabrik {
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * Testguthaben zurücksetzten und Maschinen leeren
+	 */
+	public void resetFabrik() {
+		testguthaben = guthaben;
+		maschine.clear();
+	}
 
 	/**
 	 * Diese Methode fügt der Fabrik eine Maschine (@param maschine) hinzu
+	 * und reduziert das guthaben entsprechend der Kosten
 	 */
 	public void fuegeMaschineHinzu(Maschine maschine) {
 		maschine.setFabrik(this);
+		testguthaben -= maschine.getKosten();
 		this.maschine.add(maschine);
 	}
 	
 	/**
 	 * Diese Methode entfernt eine Maschine am gegebenem @param index aus der Fabrik
+	 * und erhöht das Guthaben entsprechend der Kosten
 	 */
 	public void entferneMaschine(int index) {
-		if(maschine.size() - 1 < index) return; // Abfragen, existiert der Index?
+		if(maschine.size() - 1 < index) return; // TODO: try Catch einbauen
+		
+		testguthaben += maschine.get(index).getKosten();
 		maschine.remove(index);
 	}
 	
@@ -64,10 +80,6 @@ public class Fabrik {
 	 * Das erwirtschaftete Guthaben wird zurückgegeben: @return testguthaben.
 	 */
 	public double firmaTesten(int rundenanzahl) {
-		testguthaben = guthaben;
-		
-		for(Maschine m : maschine)
-			testguthaben -= m.getKosten();
 		
 		// Produktionsprozess
 		for(int i = 0; i < rundenanzahl; i++) {

@@ -13,11 +13,12 @@ public class PanelManager {
 	private ArrayList <Maschine> maschinenEntwuerfe;
 	private Fabrik fabrik;
 	
-	// zum Testen der GUI
 	private InputPanel inputPanel;
+	private MaschinenPanel maschinenPanel;
+	private AuswahlPanel auswahlPanel;
 
 	public PanelManager() {
-		// TODO
+		// TODO init panels
 	}
 	
 	public ArrayList<Produkt> getProduktEntwuerfe() {
@@ -37,7 +38,11 @@ public class PanelManager {
 		f.setSize(1000, 500);
 		f.setVisible(true);
 		
-		// TODO InputPanel auf die linke Seite des Frames einbetten.
+		// TODO inputPanel auf die linke Seite des Frames einbetten.
+		
+		// TODO maschinenPanel auf die rechte Seite des Frames einbetten.
+		
+		// TODO zweites Fenster erstellen und auswahlPanel einbetten
 	}
 
 	/**
@@ -54,7 +59,8 @@ public class PanelManager {
 	 * Identisch zu der addOrReplaceProduktentwurf, lediglich mit der Maschinenliste. 
 	 */
 	public void addOrReplaceMaschinenentwurf(Maschine maschine) {
-		
+		maschinenPanel.updateData();
+		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
 	}
 	
 	// ==================================================
@@ -66,6 +72,9 @@ public class PanelManager {
 	 */
 	public void addMaschineToFabrik(int index) {
 		inputPanel.updateData();
+		maschinenPanel.updateData();
+		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
+		auswahlPanel.updateData();
 	}
 	
 	/**
@@ -75,6 +84,9 @@ public class PanelManager {
 	 */
 	public void removeMaschineFromFabrik(int index) {
 		inputPanel.updateData();
+		maschinenPanel.updateData();
+		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
+		auswahlPanel.updateData();
 	}
 	
 	/**
@@ -82,6 +94,7 @@ public class PanelManager {
 	 */
 	public void resetFabrik() {
 		fabrik.resetFabrik();
+		auswahlPanel.updateData();
 	}
 	
 	/**
