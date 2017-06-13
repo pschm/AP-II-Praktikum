@@ -1,6 +1,15 @@
 package gui;
 
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import app.Erzeuger;
+import app.Produkt;
+import app.Verwerter;
 
 /**
  * Erstellen Sie eine Datenstruktur MaschinenPanel,
@@ -15,6 +24,8 @@ public class MaschinenPanel extends JPanel {
 	
 	public MaschinenPanel(PanelManager panelManager) {
 		this.panelManager = panelManager;
+		
+		buildGui();
 	}
 	
 	/**
@@ -22,29 +33,69 @@ public class MaschinenPanel extends JPanel {
 	 * entfernt werden.
 	 */
 	public void updateData() {
-		// TODO
+		this.removeAll(); // TODO kann eignentlich nicht richtig sein --> auch im AuswahlPanel aendern
+		buildGui();
 	}
 	
-	// TODO Legen Sie nun das outerPanel (siehe Abbildung 3) an,
-	//      welches für die Sammlung der einzelnen itemPanel zuständig ist.
-	//	  # Holen Sie sich die Liste der Maschinenentwürfe und iterieren Sie über diese. Für
-	//		jeden Maschinenentwurf müssen die folgenden drei JPanel zur Visualisierung der
-	//		Maschineninformationen angelegt werden (in Abbildung 3 als InnerPanels
-	//		bezeichnet):
-	//	    • Maschinendaten (Typ, Name, Kosten),
-	//		• Erzeugnisdaten (Name, Herstellungskosten, Verkaufswert) und
-	//		• Abhaengigkeitsdaten (Name, Herstellungskosten, Verkaufswert, Anzahl).
-	//		Achtung: Abhängigkeitsdaten werden nur gefüllt, wenn die Maschine vom
-	//		Typ des Verwerters ist.
-	//	  # Erstellen Sie ein weiteres Panel, in welchem Sie die drei innerPanel einbetten
-	//		(in Abbildung 3 als itemPanels bezeichnet). Fügen Sie diesem itemPanel zudem
-	//		einen MouseListener hinzu, welcher nach einem Mausklick den momentanen
-	//		Maschinenentwurf der Fabrik hinzufügt. Fügen Sie dieses itemPanel dem
-	//		outerPanel hinzu.
-	//	  # Nachdem für jeden Maschinenentwurf ein itemPanel angelegt und dem
-	//		outerPanel hinzugefügt wurde, kann dieses outerPanel im Norden des
-	//		MaschinenPanels hinzugefügt werden.
-	//		Rufen Sie aus anschließend die Methode revalidate() des MaschinenPanels
-	//		auf, um die Darstellung durch Swing zu aktualisieren.
-	//		Optional kann noch ein Tabellenkopf hinzugefügt werden.
+	public void buildGui() {
+		JPanel outerPanel = new JPanel();
+		outerPanel.setLayout(new GridLayout(0, 1));
+		
+		for(int i = 0; i < panelManager.getMaschinenEntwuerfe().size(); i++) {
+			Erzeuger e = (Erzeuger) panelManager.getMaschinenEntwuerfe().get(i);
+			
+			// itemPanels erzeugen
+			JPanel maschinenDaten      = new JPanel();
+			JPanel erzeugnisDaten      = new JPanel();
+			JPanel abhaengigkeitsDaten = new JPanel();
+			
+			// itemPannels fuellen
+			maschinenDaten.setLayout(new GridLayout(3, 1));
+			maschinenDaten.add(new JLabel("Typ: "    + e.getTyp()));
+			maschinenDaten.add(new JLabel("Name: "   + e.getName()));
+			maschinenDaten.add(new JLabel("Kosten: " + e.getKosten()));
+			
+			erzeugnisDaten.setLayout(new GridLayout(3, 1));
+			erzeugnisDaten.add(new JLabel("Name: "               + e.getErzeugnis().getName()));
+			erzeugnisDaten.add(new JLabel("Herstellungskosten: " + e.getErzeugnis().getKosten()));
+			erzeugnisDaten.add(new JLabel("Verkaufswert: "       + e.getErzeugnis().getVerkaufswert()));
+			
+			if(e instanceof Verwerter) {
+				Produkt p = ((Verwerter) e).getAbhaenigkeit();
+				abhaengigkeitsDaten.setLayout(new GridLayout(4, 1));
+				abhaengigkeitsDaten.add(new JLabel("Name: " + p.getName()));
+				abhaengigkeitsDaten.add(new JLabel("Herstellungskosten: " + p.getKosten()));
+				abhaengigkeitsDaten.add(new JLabel("Verkaufswert: " + p.getVerkaufswert()));
+				abhaengigkeitsDaten.add(new JLabel("Anzahl: " + ((Verwerter)e).getAnzahl()));
+			}
+			
+			// innerPanel
+			JPanel maschinenPanel = new JPanel();
+			
+			// Layout festlegen
+			maschinenPanel.setLayout(new GridLayout(1, 3));
+			
+			// itemPanels hinzufuegen
+			maschinenPanel.add(maschinenDaten);
+			maschinenPanel.add(erzeugnisDaten);
+			maschinenPanel.add(abhaengigkeitsDaten);
+			
+			final int index = i; // sonst meckert der Mouse listener
+			maschinenPanel.addMouseListener( new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					panelManager.addMaschineToFabrik(index);
+				}
+			});
+			
+			
+			outerPanel.add(maschinenPanel); // in MouseListener??????
+			
+			
+		} // Ende for (MaschinenEntwuerfe)
+		
+		this.add(outerPanel);
+		revalidate();
+	}
+
 }

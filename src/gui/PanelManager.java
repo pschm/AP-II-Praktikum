@@ -19,12 +19,13 @@ public class PanelManager {
 	private AuswahlPanel auswahlPanel;
 
 	public PanelManager(Fabrik f) {
+		produktEntwuerfe   = new ArrayList<Produkt>();
+		maschinenEntwuerfe = new ArrayList<Maschine>();
+	
 		inputPanel     = new InputPanel(this);
 		maschinenPanel = new MaschinenPanel(this);
 		auswahlPanel   = new AuswahlPanel(this);
 		
-		produktEntwuerfe   = new ArrayList<Produkt>();
-		maschinenEntwuerfe = new ArrayList<Maschine>();
 		fabrik = f;
 	}
 	
@@ -43,6 +44,7 @@ public class PanelManager {
 	public void start() {
 		JFrame mainFrame = new JFrame();
 		mainFrame.setSize(1000, 500);
+		mainFrame.setLocation(50, 50);
 		mainFrame.setVisible(true);
 		
 		mainFrame.setLayout(new BorderLayout());
@@ -52,7 +54,8 @@ public class PanelManager {
 		
 		JFrame selectionFrame = new JFrame();
 		selectionFrame.setVisible(true);
-		selectionFrame.setSize(300, 200);
+		selectionFrame.setSize(400, 500);
+		selectionFrame.setLocation(1050, 50);
 		selectionFrame.add(auswahlPanel);
 	}
 
@@ -85,6 +88,13 @@ public class PanelManager {
 	public void addOrReplaceMaschinenentwurf(Maschine maschine) {
 		boolean contains = false;
 		
+		if(maschinenEntwuerfe.isEmpty()) { // TEST
+			maschinenEntwuerfe.add(maschine);
+			maschinenPanel.updateData();
+			maschinenPanel.repaint();
+			return;
+		}
+		
 		for(int i = 0; i < produktEntwuerfe.size(); i++) {
 			if(maschinenEntwuerfe.get(i).getName() == maschine.getName()) {
 				maschinenEntwuerfe.add(i, maschine);
@@ -93,11 +103,10 @@ public class PanelManager {
 			}
 		}
 		
-		if( !contains )
-			maschinenEntwuerfe.add(maschine);
+		if( !contains )	maschinenEntwuerfe.add(maschine);
 		
 		maschinenPanel.updateData();
-		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
+		maschinenPanel.repaint();
 	}
 	
 	// ==================================================
@@ -112,7 +121,7 @@ public class PanelManager {
 		
 		inputPanel.updateData();
 		maschinenPanel.updateData();
-		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
+		maschinenPanel.repaint();
 		auswahlPanel.updateData();
 	}
 	
@@ -126,7 +135,7 @@ public class PanelManager {
 		
 		inputPanel.updateData();
 		maschinenPanel.updateData();
-		maschinenPanel.repaint(); // TODO ueberlegen, ob hier sinnvoll
+		maschinenPanel.repaint();
 		auswahlPanel.updateData();
 	}
 	

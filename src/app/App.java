@@ -18,11 +18,10 @@ public class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Fabriktest
 		// Fabrik
-		Fabrik baum = new Fabrik(new Warenspeicher(), 1000.0, "Baum");
+		Fabrik holz = new Fabrik(new Warenspeicher(), 1001.0, "Holz");
 		
-		PanelManager pm = new PanelManager(baum);
+		PanelManager pm = new PanelManager(holz);
 		pm.start();
 		
 //		// Maschinen

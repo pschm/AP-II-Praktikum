@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,18 +71,8 @@ public class InputPanel extends JPanel {
 	 * Methode zur erstellung der GUI
 	 */
 	private void buildGui() {
-		
-		// LayoutTest
-//		JButton b = new JButton("Just fake Button");
-//		Dimension buttonSize = b.getPreferredSize();
-//		setPreferredSize(new Dimension(new Dimension((int)(buttonSize.getWidth() * 2.5)+20,
-//                (int)(buttonSize.getHeight() * 3.5)+20 * 2)));
-		
+
 		// --- Layout ---
-//		// Test
-//		for(int i = 0; i < 32; i++) {
-//			add(new JButton("Btn: " + (i+1)));
-//		}
 		setLayout(new GridLayout(16, 2));
 		
 		// Produkt
@@ -141,6 +129,9 @@ public class InputPanel extends JPanel {
 							Double.parseDouble(tf_produktKosten.getText()),
 							Double.parseDouble(tf_produktVerkaufswert.getText()))
 				);
+				tf_produktName.setText("");
+				tf_produktKosten.setText("");
+				tf_produktVerkaufswert.setText("");
 			}
 		});
 		
