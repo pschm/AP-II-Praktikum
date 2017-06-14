@@ -24,7 +24,7 @@ public class PanelManager {
 	
 		inputPanel     = new InputPanel(this);
 		maschinenPanel = new MaschinenPanel(this);
-		//auswahlPanel   = new AuswahlPanel(this);
+		auswahlPanel   = new AuswahlPanel(this);
 		
 		fabrik = f;
 	}
@@ -52,11 +52,11 @@ public class PanelManager {
 		mainFrame.add(maschinenPanel, BorderLayout.EAST);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-//		JFrame selectionFrame = new JFrame();
-//		selectionFrame.setVisible(true);
-//		selectionFrame.setSize(400, 500);
-//		selectionFrame.setLocation(1050, 50);
-//		selectionFrame.add(auswahlPanel);
+		JFrame selectionFrame = new JFrame();
+		selectionFrame.setVisible(true);
+		selectionFrame.setSize(400, 500);
+		selectionFrame.setLocation(1050, 50);
+		selectionFrame.add(auswahlPanel);
 	}
 
 	/**
@@ -69,14 +69,14 @@ public class PanelManager {
 		boolean contains = false;
 		
 		for(int i = 0; i < produktEntwuerfe.size(); i++) {
-			if(produktEntwuerfe.get(i).getName() == produkt.getName()) {
+			if(produktEntwuerfe.get(i).getName().equals(produkt.getName()) ) {
+				produktEntwuerfe.remove(i);
 				produktEntwuerfe.add(i, produkt);
 				contains = true;
 				break;
 			}
 		}
 		
-		// TODO bugfix --> multiple products in ArrayList
 		if( !contains ) produktEntwuerfe.add(produkt);
 				
 		inputPanel.updateData();
@@ -88,15 +88,8 @@ public class PanelManager {
 	public void addOrReplaceMaschinenentwurf(Maschine maschine) {
 		boolean contains = false;
 		
-		if(maschinenEntwuerfe.isEmpty()) {
-			maschinenEntwuerfe.add(maschine);
-			maschinenPanel.updateData();
-			maschinenPanel.repaint();
-			return;
-		}
-		
-		for(int i = 0; i < produktEntwuerfe.size() - 1; i++) { // TODO warum -1?
-			if(maschinenEntwuerfe.get(i).getName() == maschine.getName()) {
+		for(int i = 0; i < maschinenEntwuerfe.size(); i++) {
+			if(maschinenEntwuerfe.get(i).getName().equals(maschine.getName())) {
 				maschinenEntwuerfe.add(i, maschine);
 				contains = true;
 				break;
@@ -122,7 +115,7 @@ public class PanelManager {
 		inputPanel.updateData();
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();
-		//auswahlPanel.updateData();
+		auswahlPanel.updateData();
 	}
 	
 	/**
@@ -136,18 +129,16 @@ public class PanelManager {
 		inputPanel.updateData();
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();
-		//auswahlPanel.updateData();
+		auswahlPanel.updateData();
 	}
 	
 	/**
 	 * greift momentan lediglich auf die resetFabrik()-Methode der Fabrik zu.
 	 */
 	public void resetFabrik() {
-		fabrik.resetFabrik();
-		// Testguthaben zuruecksetzen!
-		
+		fabrik.resetFabrik();		
 		inputPanel.updateData();
-		//auswahlPanel.updateData();
+		auswahlPanel.updateData();
 	}
 	
 	public void startFabrik(int runden) {

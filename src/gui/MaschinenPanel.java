@@ -1,12 +1,12 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import app.Erzeuger;
 import app.Produkt;
 import app.Verwerter;
@@ -34,6 +34,7 @@ public class MaschinenPanel extends JPanel {
 	 */
 	public void updateData() {
 		this.removeAll(); // TODO kann eignentlich nicht richtig sein --> auch im AuswahlPanel aendern
+		// panelManager.getMaschinenEntwuerfe().clear();
 		buildGui();
 	}
 	
@@ -52,6 +53,9 @@ public class MaschinenPanel extends JPanel {
 		for(int i = 0; i < panelManager.getMaschinenEntwuerfe().size(); i++) {
 			Erzeuger e = (Erzeuger) panelManager.getMaschinenEntwuerfe().get(i);
 			
+			// innerPanel
+			JPanel maschinenPanel = new JPanel();
+
 			// itemPanels erzeugen
 			JPanel maschinenDaten      = new JPanel();
 			JPanel erzeugnisDaten      = new JPanel();
@@ -62,13 +66,21 @@ public class MaschinenPanel extends JPanel {
 			maschinenDaten.add(new JLabel("Typ: "    + e.getTyp()));
 			maschinenDaten.add(new JLabel("Name: "   + e.getName()));
 			maschinenDaten.add(new JLabel("Kosten: " + e.getKosten()));
+			maschinenDaten.setBackground(Color.YELLOW);
 			
 			erzeugnisDaten.setLayout(new GridLayout(3, 1));
 			erzeugnisDaten.add(new JLabel("Name: "               + e.getErzeugnis().getName()));
 			erzeugnisDaten.add(new JLabel("Herstellungskosten: " + e.getErzeugnis().getKosten()));
 			erzeugnisDaten.add(new JLabel("Verkaufswert: "       + e.getErzeugnis().getVerkaufswert()));
+			erzeugnisDaten.setBackground(Color.YELLOW);
+			
+			abhaengigkeitsDaten.setBackground(Color.YELLOW);
 			
 			if(e instanceof Verwerter) {
+				abhaengigkeitsDaten.setBackground(Color.ORANGE);
+				maschinenDaten.setBackground(Color.ORANGE);
+				erzeugnisDaten.setBackground(Color.ORANGE);
+				
 				Produkt p = ((Verwerter) e).getAbhaenigkeit();
 				abhaengigkeitsDaten.setLayout(new GridLayout(4, 1));
 				abhaengigkeitsDaten.add(new JLabel("Name: " + p.getName()));
@@ -77,8 +89,7 @@ public class MaschinenPanel extends JPanel {
 				abhaengigkeitsDaten.add(new JLabel("Anzahl: " + ((Verwerter)e).getAnzahl()));
 			}
 			
-			// innerPanel
-			JPanel maschinenPanel = new JPanel();
+			
 			
 			// Layout festlegen
 			maschinenPanel.setLayout(new GridLayout(1, 3));
@@ -97,10 +108,9 @@ public class MaschinenPanel extends JPanel {
 			});
 			
 			
-			outerPanel.add(maschinenPanel); // in MouseListener??????
+			outerPanel.add(maschinenPanel);
 			
-			
-		} // Ende for (MaschinenEntwuerfe)
+		} // END - for(MaschinenEntwuerfe)
 		
 		this.add(outerPanel);
 		revalidate();

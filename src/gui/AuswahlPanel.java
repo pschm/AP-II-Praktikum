@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import app.Erzeuger;
+import app.Verwerter;
 
 @SuppressWarnings("serial")
 public class AuswahlPanel extends JPanel {
@@ -20,17 +22,21 @@ public class AuswahlPanel extends JPanel {
 	}
 	
 	public void updateData() {
-		// TODO
+		this.removeAll();
+		buildGui();
 	}
 
 	public void buildGui() {
 		JPanel outerPanel = new JPanel();
 		outerPanel.setLayout(new GridLayout(0, 1));
+		
+		outerPanel.add(new JLabel("Deine Auswahl:"));
 
+		// panelManager.getAktiveMaschinen().isEmpty();
 		try {
 			panelManager.getAktiveMaschinen().isEmpty();
 		} catch (Exception e) {
-			System.out.println("Sachen gibts -.-(AuswahlPanel)");
+			System.out.println("Noch keine Maschinen in der Fabrik");
 			return;
 		}
 		
@@ -46,16 +52,23 @@ public class AuswahlPanel extends JPanel {
 			maschinenDaten.add(new JLabel("Name: "   + e.getName()));
 			maschinenDaten.add(new JLabel("Kosten: " + e.getKosten()));
 			
+			if(e instanceof Verwerter) {
+				maschinenDaten.setBackground(Color.ORANGE);
+			} else {
+				maschinenDaten.setBackground(Color.YELLOW);
+			}
+			
 			final int index = i; // sonst meckert der Mouse listener
 			maschinenDaten.addMouseListener( new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					panelManager.removeMaschineFromFabrik(index);
+					repaint();
 				}
 			});
 			
 			
-			outerPanel.add(maschinenDaten); // in MouseListener??????
+			outerPanel.add(maschinenDaten);
 			
 			
 		} // Ende for (MaschinenEntwuerfe)

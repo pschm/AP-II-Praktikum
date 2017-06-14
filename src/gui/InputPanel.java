@@ -129,9 +129,9 @@ public class InputPanel extends JPanel {
 							Double.parseDouble(tf_produktKosten.getText()),
 							Double.parseDouble(tf_produktVerkaufswert.getText()))
 				);
-				tf_produktName.setText("");
-				tf_produktKosten.setText("");
-				tf_produktVerkaufswert.setText("");
+//				tf_produktName.setText("");
+//				tf_produktKosten.setText("");
+//				tf_produktVerkaufswert.setText("");
 			}
 		});
 		
