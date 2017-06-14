@@ -19,6 +19,9 @@ public class Warenspeicher {
 	 */
 	public void fuegeProduktHinzu(Produkt produkt) {
 		produkte.add(produkt);
+		
+		Produkt p = produkte.get(0);
+		
 	}
 	
 	/**

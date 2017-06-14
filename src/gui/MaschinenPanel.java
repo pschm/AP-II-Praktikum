@@ -41,6 +41,14 @@ public class MaschinenPanel extends JPanel {
 		JPanel outerPanel = new JPanel();
 		outerPanel.setLayout(new GridLayout(0, 1));
 		
+		JPanel headerPanel = new JPanel();
+		headerPanel.setLayout(new GridLayout(1, 3));
+		headerPanel.add(new JLabel("Maschine"));
+		headerPanel.add(new JLabel("Erzeugnis:"));
+		headerPanel.add(new JLabel("Abhaenigkeit:"));
+		
+		outerPanel.add(headerPanel);
+		
 		for(int i = 0; i < panelManager.getMaschinenEntwuerfe().size(); i++) {
 			Erzeuger e = (Erzeuger) panelManager.getMaschinenEntwuerfe().get(i);
 			

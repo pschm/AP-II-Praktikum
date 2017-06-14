@@ -30,7 +30,7 @@ public class AuswahlPanel extends JPanel {
 		try {
 			panelManager.getAktiveMaschinen().isEmpty();
 		} catch (Exception e) {
-			System.out.println("Sachen gibts -.-");
+			System.out.println("Sachen gibts -.-(AuswahlPanel)");
 			return;
 		}
 		

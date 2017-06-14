@@ -16,7 +16,7 @@ import app.Maschine;
 import app.Produkt;
 import app.Verwerter;
 
-@SuppressWarnings("serial") // TODO Why?
+@SuppressWarnings("serial") // TODO
 public class InputPanel extends JPanel {
 
 	private PanelManager panelManager;

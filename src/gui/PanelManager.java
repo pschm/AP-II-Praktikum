@@ -24,7 +24,7 @@ public class PanelManager {
 	
 		inputPanel     = new InputPanel(this);
 		maschinenPanel = new MaschinenPanel(this);
-		auswahlPanel   = new AuswahlPanel(this);
+		//auswahlPanel   = new AuswahlPanel(this);
 		
 		fabrik = f;
 	}
@@ -52,11 +52,11 @@ public class PanelManager {
 		mainFrame.add(maschinenPanel, BorderLayout.EAST);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JFrame selectionFrame = new JFrame();
-		selectionFrame.setVisible(true);
-		selectionFrame.setSize(400, 500);
-		selectionFrame.setLocation(1050, 50);
-		selectionFrame.add(auswahlPanel);
+//		JFrame selectionFrame = new JFrame();
+//		selectionFrame.setVisible(true);
+//		selectionFrame.setSize(400, 500);
+//		selectionFrame.setLocation(1050, 50);
+//		selectionFrame.add(auswahlPanel);
 	}
 
 	/**
@@ -88,14 +88,14 @@ public class PanelManager {
 	public void addOrReplaceMaschinenentwurf(Maschine maschine) {
 		boolean contains = false;
 		
-		if(maschinenEntwuerfe.isEmpty()) { // TEST
+		if(maschinenEntwuerfe.isEmpty()) {
 			maschinenEntwuerfe.add(maschine);
 			maschinenPanel.updateData();
 			maschinenPanel.repaint();
 			return;
 		}
 		
-		for(int i = 0; i < produktEntwuerfe.size(); i++) {
+		for(int i = 0; i < produktEntwuerfe.size() - 1; i++) { // TODO warum -1?
 			if(maschinenEntwuerfe.get(i).getName() == maschine.getName()) {
 				maschinenEntwuerfe.add(i, maschine);
 				contains = true;
@@ -122,7 +122,7 @@ public class PanelManager {
 		inputPanel.updateData();
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();
-		auswahlPanel.updateData();
+		//auswahlPanel.updateData();
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public class PanelManager {
 		inputPanel.updateData();
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();
-		auswahlPanel.updateData();
+		//auswahlPanel.updateData();
 	}
 	
 	/**
@@ -144,8 +144,10 @@ public class PanelManager {
 	 */
 	public void resetFabrik() {
 		fabrik.resetFabrik();
+		// Testguthaben zuruecksetzen!
 		
-		auswahlPanel.updateData();
+		inputPanel.updateData();
+		//auswahlPanel.updateData();
 	}
 	
 	public void startFabrik(int runden) {
