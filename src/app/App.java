@@ -20,7 +20,7 @@ public class App {
 	public static void main(String[] args) {
 		// Fabrik
 		Fabrik holz = new Fabrik(new Warenspeicher(), 1001.0, "Holz");
-		
+
 		PanelManager pm = new PanelManager(holz);
 		pm.start();
 		
