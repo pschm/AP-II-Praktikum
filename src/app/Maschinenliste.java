@@ -2,6 +2,7 @@ package app;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Maschinenliste implements Iterable {
 	Node first = null;
@@ -56,7 +57,16 @@ public class Maschinenliste implements Iterable {
 	 * Wird kein Knoten mit der entsprechenden Maschine gefunden, so soll der Wert -1 ausgegeben werden.
 	 */
 	public int indexOf(Maschine maschine) {
-		return -1;
+		if(isEmpty()) return -1; // Liste leer, maschine nicht vorhanden
+		Node runPointer = first;
+		
+		for(int i = 0; runPointer.next != null; i++) {
+			if(runPointer.maschine != null && runPointer.maschine.equals(maschine))
+				return i;
+			runPointer = runPointer.next;
+		}
+		
+		return -1; // Element nicht in der Liste
 	}
 	
 	/**
@@ -66,14 +76,26 @@ public class Maschinenliste implements Iterable {
 	 * so soll eine IndexOutOfBoundsException geworfen werden.
 	 */
 	public Maschine get(int index) {
-		return new Maschine("Baum", 50.0);
+		if(isEmpty()) throw new NoSuchElementException();
+		if(index > currentSize - 1 || index < 0) throw new IndexOutOfBoundsException();
+		
+		Node runPointer = first;	
+		
+		for(int i = 0; runPointer.next != null; i++) {
+			if(index == i) return runPointer.maschine;
+			runPointer = runPointer.next;
+		}
+		
+		throw new NoSuchElementException();
 	}
 	
 	/**
 	 * @return Maschine des ersten Knotens zurück
 	 */
 	public Maschine getFirst() {
-		return new Maschine("Baum", 50.0);
+		if(first != null && first.maschine != null)
+			return first.maschine;
+		else throw new NoSuchElementException();
 	}
 	
 	/**
@@ -83,7 +105,18 @@ public class Maschinenliste implements Iterable {
 	 * so soll eine IndexOutOfBoundsException geworfen werden.
 	 */
 	public void set(int index, Maschine maschine) {
+		if(isEmpty()) throw new NoSuchElementException();
+		if(index > currentSize - 1 || index < 0) throw new IndexOutOfBoundsException();
 		
+		Node runPointer = first;	
+		
+		for(int i = 0; runPointer.next != null; i++) {
+			if(index == i) {
+				runPointer.maschine = maschine;
+				return;
+			}
+			runPointer = runPointer.next;
+		}
 	}
 	
 	/**
@@ -92,7 +125,20 @@ public class Maschinenliste implements Iterable {
 	 * Ist der Wert von index nicht innerhalb des möglichen Bereiches, so soll eine IndexOutOfBoundsException geworfen werden.
 	 */
 	public void remove(int index) {
+		if(isEmpty()) throw new NoSuchElementException();
+		if(index > currentSize - 1 || index < 0) throw new IndexOutOfBoundsException();
 		
+		Node runPointer = first;	
+		
+		for(int i = 0; runPointer.next != null; i++) {
+			if(index == i) {
+				// TODO
+				// runPointer.maschine = maschine;
+				currentSize--;
+				return;
+			}
+			runPointer = runPointer.next;
+		}
 	}
 	
 	/**
