@@ -16,8 +16,7 @@ public class Maschinenliste implements Iterable {
 	 * @return true, wenn die Liste leer ist.
 	 */
 	public boolean isEmpty() {
-		// TODO
-		return false;
+		return currentSize == 0;
 	}
 	
 	/**
@@ -25,7 +24,10 @@ public class Maschinenliste implements Iterable {
 	 * @param maschine - Daten des neuen Knoten
 	 */
 	public void addFirst(Maschine maschine) {
+		first = new Node(maschine, first);
+		currentSize++;
 		
+		if(currentSize == 1) last = first;
 	}
 	
 	/**
@@ -33,7 +35,13 @@ public class Maschinenliste implements Iterable {
 	 * @param maschine - Daten des neuen Knoten
 	 */
 	public void addLast(Maschine maschine) {
-		
+		if(isEmpty()) addFirst(maschine);
+		else {
+			Node tmp = last;
+			last = new Node(maschine, null);
+			tmp.next = last;
+			currentSize++;
+		}
 	}
 	
 	/**

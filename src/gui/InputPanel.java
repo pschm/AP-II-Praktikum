@@ -63,7 +63,6 @@ public class InputPanel extends JPanel {
 	
 	public InputPanel(PanelManager panelManager) {
 		this.panelManager = panelManager;
-		
 		buildGui();
 	}
 	
