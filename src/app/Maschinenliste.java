@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 public class Maschinenliste implements Iterable {
 	Node first = null;
 	Node last  = null; // nicht gefordert, ggf. trotzdem einbinden
+	boolean isSorted = true;
 	int currentSize = 0;
 	
 	public Maschinenliste() {
@@ -128,15 +129,23 @@ public class Maschinenliste implements Iterable {
 		if(isEmpty()) throw new NoSuchElementException();
 		if(index > currentSize - 1 || index < 0) throw new IndexOutOfBoundsException();
 		
+		// spezialfall index 0
+		if(index == 0) {
+			first = first.next;
+			currentSize--;
+			return;
+		}
+		
 		Node runPointer = first;	
+		Node prevNode   = first;
 		
 		for(int i = 0; runPointer.next != null; i++) {
 			if(index == i) {
-				// TODO
-				// runPointer.maschine = maschine;
+				prevNode.next = runPointer.next;
 				currentSize--;
 				return;
 			}
+			prevNode = runPointer;
 			runPointer = runPointer.next;
 		}
 	}
@@ -145,7 +154,10 @@ public class Maschinenliste implements Iterable {
 	 * Entfernt alle Knoten aus der Liste
 	 */
 	public void clear() {
-		
+		first       = null;
+		last        = null;
+		isSorted    = true;
+		currentSize = 0;
 	}
 	
 	/**
@@ -153,6 +165,20 @@ public class Maschinenliste implements Iterable {
 	 * (Schauen Sie sich hierzu das Beispiel im Skript an). Zu verwendende Comparator werden in dem nächsten Aufgabenteil erstellt.
 	 */
 	public void addSorted(Maschine neueMaschine, Comparator<Maschine> comp) {
+		if(!isSorted) throw new IllegalStateException(); // in eine unsortierte Liste kann nichts sortiert eingefügt werden.
+		
+		if(isEmpty() || comp.compare(neueMaschine, getFirst()) <= 0 ) addFirst(neueMaschine);
+		else {
+			Node runPointer = first;
+			while(runPointer.next != null &&
+					runPointer.next.maschine != null &&
+					comp.compare(neueMaschine, runPointer.next.maschine) > 0 ) {
+				runPointer = runPointer.next;
+			}
+			
+			runPointer.next = new Node(neueMaschine, runPointer.next);
+			currentSize++;
+		}
 		
 	}
 	
@@ -161,7 +187,14 @@ public class Maschinenliste implements Iterable {
 	 * welche Methoden Sie bereits erstellt haben und wiederverwenden können.
 	 */
 	public void sort(Comparator<Maschine> comp) {
+		Node tmp = first;
 		
+		clear(); // unsortierte Liste leeren
+		
+		while(tmp != null) {
+			addSorted(tmp.maschine, comp); // alle Elemente neue einfügen (sortiert)
+			tmp = tmp.next;
+		}
 	}
 	
 	private class Node {
@@ -182,13 +215,14 @@ public class Maschinenliste implements Iterable {
 	@Override
 	public Iterator<Maschine> iterator() {
 		Iterator<Maschine> it = new Iterator<Maschine>() {
-
+			private Node nextNode = first;
+			
 			/**
 			 * @return true, wenn sich noch weitere Elemente in der Liste befinden (ansonsten false)
 			 */
 			@Override
 			public boolean hasNext() {
-				return false;
+				return nextNode != null;
 			}
 
 			@Override
@@ -197,12 +231,17 @@ public class Maschinenliste implements Iterable {
 			 * Ist der aktuelle Knoten leer, so soll eine NoSuchElementException geworfen werden.
 			 */
 			public Maschine next() {
-				//if(hasNext()) return next; // TODO
-				return null;
+				if(!hasNext()) throw new NoSuchElementException();
+				
+				Maschine next = nextNode.maschine; // Maschine merken
+				
+				nextNode = nextNode.next; // neuen nächsten Knoten merken
+				
+				return next;
 			}
 			
 		};
 		
-		return null;
+		return it;
 	}
 }

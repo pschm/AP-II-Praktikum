@@ -17,8 +17,7 @@ public class NameComparator implements Comparator<Maschine>{
 	 * der compareTo()-Methode).
 	 */
 	public int compare(Maschine o1, Maschine o2) {
-		// TODO Auto-generated method stub
-		return 0;
+		return o1.getName().compareTo(o1.getName());
 	}
 
 }
