@@ -4,14 +4,17 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Maschinenliste implements Iterable {
-	Node first = null;
-	Node last  = null; // nicht gefordert, ggf. trotzdem einbinden
-	boolean isSorted = true;
-	int currentSize = 0;
+public class Maschinenliste implements Iterable<Maschine> {
+	Node first;
+	Node last;
+	boolean isSorted ;
+	int currentSize;
 	
 	public Maschinenliste() {
-		// TODO
+		first = null;
+		last  = null;
+		isSorted = true;
+		currentSize = 0;
 	}
 	
 	/**
@@ -87,7 +90,8 @@ public class Maschinenliste implements Iterable {
 			runPointer = runPointer.next;
 		}
 		
-		throw new NoSuchElementException();
+		return new Maschine("DummyTest", 42);
+		//throw new NoSuchElementException();
 	}
 	
 	/**

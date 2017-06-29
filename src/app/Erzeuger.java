@@ -18,6 +18,11 @@ public class Erzeuger extends Maschine {
 		return erzeugnis;
 	}
 	
+	@Override
+	public String toString() {
+		return "Ich bin schon ein Erzeuger";
+	}
+	
 	/**
 	 * Diese Methode prüft ob genügend Guthaben für die Produktion des Produkt vorhanden ist,
 	 * ist dies der Fall, wird ein Produkt produziert und dem Warenspeicher der Fabrik hinzugefügt.

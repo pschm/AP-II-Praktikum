@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.NoSuchElementException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import app.Erzeuger;
+import app.Maschine;
 import app.Produkt;
 import app.Verwerter;
 
@@ -33,8 +35,7 @@ public class MaschinenPanel extends JPanel {
 	 * entfernt werden.
 	 */
 	public void updateData() {
-		this.removeAll(); // TODO kann eignentlich nicht richtig sein --> auch im AuswahlPanel aendern
-		// panelManager.getMaschinenEntwuerfe().clear();
+		this.removeAll();
 		buildGui();
 	}
 	
@@ -51,7 +52,21 @@ public class MaschinenPanel extends JPanel {
 		outerPanel.add(headerPanel);
 		
 		for(int i = 0; i < panelManager.getMaschinenEntwuerfe().size(); i++) {
-			Erzeuger e = (Erzeuger) panelManager.getMaschinenEntwuerfe().get(i);
+			Erzeuger e = null;
+			Maschine m = null;
+			
+			System.out.println("Groesse: " + panelManager.getMaschinenEntwuerfe().size());
+			m = panelManager.getMaschinenEntwuerfe().get(i);
+			System.out.println(m.toString() + " (MaschinenPanel)");
+			
+			try {
+				e = (Erzeuger) m;
+			} catch (NoSuchElementException ex) {
+				System.out.println("Kein erzeuger vorhanden - WTF");
+				return;
+			}
+			
+			// e = (Verwerter) m;
 			
 			// innerPanel
 			JPanel maschinenPanel = new JPanel();

@@ -24,6 +24,11 @@ public class Verwerter extends Erzeuger {
 		return anzahl;
 	}
 	
+	@Override
+	public String toString() {
+		return "ich bin ein verwerter";
+	}
+	
 	/**
 	 * Diese Methode prüft, ob genügend Produkte für die
 	 * Verarbeitung vorhanden sind und gibt das Ergebnis zurück (@return)

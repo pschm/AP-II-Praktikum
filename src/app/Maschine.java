@@ -24,6 +24,11 @@ public class Maschine {
 		fabrik      = null;
 	}
 	
+	@Override
+	public String toString() {
+		return "ich bin nur eine Maschien";
+	}
+	
 	public String getName() {
 		return name;
 	}

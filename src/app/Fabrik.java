@@ -1,6 +1,8 @@
 package app;
 
-import java.util.ArrayList;
+import java.util.Comparator;
+
+//import java.util.ArrayList;
 
 /**
  * Diese Klasse bildet die Grundstruktur für jede Fabrik.
@@ -10,7 +12,8 @@ public class Fabrik {
 	private double guthaben;
 	private double testguthaben;
 	private String name;
-	private ArrayList<Maschine> maschine;
+	//private ArrayList<Maschine> maschine;
+	private Maschinenliste maschine;
 	
 	/**
 	 * Der Konstruktor für die Fabrik legt fest, dass jedes neue Objekt einen @param warenspeicher,
@@ -18,14 +21,19 @@ public class Fabrik {
 	 * Des Weiteren wird die Eigenschaft maschine initialisiert. Bei Erstellung befinden sich keine Maschinen in der Fabrik.
 	 */
 	public Fabrik(Warenspeicher warenspeicher, double guthaben, String name) {
-		this.maschine      = new ArrayList<Maschine>();
+		//this.maschine      = new ArrayList<Maschine>();
+		this.maschine      = new Maschinenliste();
 		this.warenspeicher = warenspeicher;
 		this.guthaben      = guthaben;
 		this.name          = name;
 		testguthaben       = guthaben;		
 	}
 	
-	public ArrayList<Maschine> getMaschine() {
+//	public ArrayList<Maschine> getMaschine() {
+//		return maschine;
+//	}
+	
+	public Maschinenliste getMaschine() {
 		return maschine;
 	}
 	
@@ -56,7 +64,8 @@ public class Fabrik {
 	public void fuegeMaschineHinzu(Maschine maschine) {
 		maschine.setFabrik(this);
 		testguthaben -= maschine.getKosten();
-		this.maschine.add(maschine);
+		//this.maschine.add(maschine);
+		this.maschine.addLast(maschine);
 	}
 	
 	/**
@@ -72,6 +81,10 @@ public class Fabrik {
 	
 	public void testguthabenReduzieren(double kosten) {
 		testguthaben -= kosten;
+	}
+	
+	public void sort(Comparator<Maschine> comp) {
+		maschine.sort(comp);
 	}
 	
 	/**

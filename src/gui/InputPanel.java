@@ -11,8 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import app.AblaufComparator;
 import app.Erzeuger;
 import app.Maschine;
+import app.NameComparator;
 import app.Produkt;
 import app.Verwerter;
 
@@ -57,9 +59,10 @@ public class InputPanel extends JPanel {
 	// JButton
 	private JButton btn_produkt     = new JButton("Produkt anlegen");
 	private JButton btn_maschine    = new JButton("Maschine anlegen");
+	private JButton btn_sortName    = new JButton("Fabrik sortieren (Namen)");
+	private JButton btn_sortAblauf  = new JButton("Fabrik sortieren (Ablauf)");
 	private JButton btn_fabrikStart = new JButton("Test starten");
 	private JButton btn_fabrikReset = new JButton("Fabrik zurücksetzen");
-	
 	
 	public InputPanel(PanelManager panelManager) {
 		this.panelManager = panelManager;
@@ -72,11 +75,11 @@ public class InputPanel extends JPanel {
 	private void buildGui() {
 
 		// --- Layout ---
-		setLayout(new GridLayout(16, 2));
+		setLayout(new GridLayout(18, 2));
 		
 		// Produkt
 		add(l_ueberschriftProdukte);
-		add(new JLabel(" ")); // empty TODO bessere Loesung?
+		add(new JLabel(" "));
 		add(l_produktName);
 		add(tf_produktName);
 		add(l_produktKosten);
@@ -109,6 +112,8 @@ public class InputPanel extends JPanel {
 		add(l_testguthaben);
 		add(l_anzahlTestrunden);
 		add(tf_anzahlTestrunden);
+		add(btn_sortName);
+		add(btn_sortAblauf);
 		add(btn_fabrikReset);
 		add(btn_fabrikStart);
 		
@@ -164,7 +169,26 @@ public class InputPanel extends JPanel {
 					);
 				}
 				
+				if(m instanceof Erzeuger) System.out.println("Ein Erzeuger wurde ERSTELLT !!");
+				if(m instanceof Verwerter) System.out.println("Ein Verwerter wurde ERSTELLT !!");
+				System.out.println(m.toString() + " (InputPanel)");
+				
 				panelManager.addOrReplaceMaschinenentwurf(m);
+				System.out.println(panelManager.getMaschinenEntwuerfe().get(0).toString() + " (Inputpanel 2)");
+			}
+		});
+		
+		btn_sortName.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelManager.sort(new NameComparator());
+			}
+		});
+		
+		btn_sortAblauf.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelManager.sort(new AblaufComparator());
 			}
 		});
 		

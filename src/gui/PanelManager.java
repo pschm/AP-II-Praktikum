@@ -2,16 +2,19 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JFrame;
 
 import app.Fabrik;
 import app.Maschine;
+import app.Maschinenliste;
 import app.Produkt;
 
 public class PanelManager {
 	private ArrayList <Produkt> produktEntwuerfe;
-	private ArrayList <Maschine> maschinenEntwuerfe;
+	//private ArrayList <Maschine> maschinenEntwuerfe;
+	private Maschinenliste maschinenEntwuerfe;
 	private Fabrik fabrik;
 	
 	private InputPanel inputPanel;
@@ -20,7 +23,8 @@ public class PanelManager {
 
 	public PanelManager(Fabrik f) {
 		produktEntwuerfe   = new ArrayList<Produkt>();
-		maschinenEntwuerfe = new ArrayList<Maschine>();
+		//maschinenEntwuerfe = new ArrayList<Maschine>();
+		maschinenEntwuerfe = new Maschinenliste();
 	
 		inputPanel     = new InputPanel(this);
 		maschinenPanel = new MaschinenPanel(this);
@@ -33,7 +37,8 @@ public class PanelManager {
 		return produktEntwuerfe;
 	}
 
-	public ArrayList<Maschine> getMaschinenEntwuerfe() {
+	//public ArrayList<Maschine> getMaschinenEntwuerfe() {
+	public Maschinenliste getMaschinenEntwuerfe() {
 		return maschinenEntwuerfe;
 	}
 	
@@ -88,15 +93,20 @@ public class PanelManager {
 	public void addOrReplaceMaschinenentwurf(Maschine maschine) {
 		boolean contains = false;
 		
+		System.out.println(maschine.toString() + " (PanelManager/addOrReplace)");
+		
 		for(int i = 0; i < maschinenEntwuerfe.size(); i++) {
 			if(maschinenEntwuerfe.get(i).getName().equals(maschine.getName())) {
-				maschinenEntwuerfe.add(i, maschine);
+				//maschinenEntwuerfe.add(i, maschine);
+				maschinenEntwuerfe.set(i, maschine);
+				System.out.println(maschinenEntwuerfe.get(i).toString() + " (PanelManager2.1)");
 				contains = true;
 				break;
 			}
 		}
 		
-		if( !contains )	maschinenEntwuerfe.add(maschine);
+		if( !contains )	maschinenEntwuerfe.addLast(maschine);
+		System.out.println(maschinenEntwuerfe.getFirst().toString() + " (PanelManager2.2)");
 		
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();
@@ -105,6 +115,11 @@ public class PanelManager {
 	// ==================================================
 	// =	Methoden zur Kommunikation mit der Fabrik	=
 	// ==================================================
+	
+	public void sort(Comparator<Maschine> comp) {
+		fabrik.sort(comp);
+		auswahlPanel.updateData();
+	}
 	
 	/**
 	 * Diese Methode fügt den Maschinenentwurf an der Position @param index der Fabrik hinzu.
@@ -148,7 +163,8 @@ public class PanelManager {
 	/**
 	 * @return: Gibt eine Liste der Maschinen zurück, die bereits der Firma hinzugefügt wurden.
 	 */
-	public ArrayList<Maschine> getAktiveMaschinen() {
+	//public ArrayList<Maschine> getAktiveMaschinen() {
+	public Maschinenliste getAktiveMaschinen() {
 		return fabrik.getMaschine();
 	}
 	
