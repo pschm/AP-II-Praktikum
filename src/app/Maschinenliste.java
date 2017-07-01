@@ -21,7 +21,7 @@ public class Maschinenliste implements Iterable<Maschine> {
 	 * @return true, wenn die Liste leer ist.
 	 */
 	public boolean isEmpty() {
-		return currentSize == 0;
+		return first == null;
 	}
 	
 	/**
@@ -84,14 +84,25 @@ public class Maschinenliste implements Iterable<Maschine> {
 		if(index > currentSize - 1 || index < 0) throw new IndexOutOfBoundsException();
 		
 		Node runPointer = first;	
-		
-		for(int i = 0; runPointer.next != null; i++) {
-			if(index == i) return runPointer.maschine;
-			runPointer = runPointer.next;
+		if(currentSize == 1 && index == 0) {
+			return first.maschine;
 		}
 		
-		return new Maschine("DummyTest", 42);
-		//throw new NoSuchElementException();
+		int i = 0;
+		while( runPointer != null ) {
+			System.out.println("Druchlauf " +i);
+			if(index == i) {return runPointer.maschine;}
+			runPointer = runPointer.next;
+			i++;
+		}
+		
+//		for(int i = 0; runPointer.next != null; i++) {
+//			if(index == i) return runPointer.maschine;
+//			runPointer = runPointer.next;
+//		}
+		
+		//return new Erzeuger("DummyTest", 42.0, new Produkt("t1", 12, 120));
+		throw new NoSuchElementException();
 	}
 	
 	/**
@@ -114,7 +125,7 @@ public class Maschinenliste implements Iterable<Maschine> {
 		if(index > currentSize - 1 || index < 0) throw new IndexOutOfBoundsException();
 		
 		Node runPointer = first;	
-		
+//		if(// currentSize == 1 )
 		for(int i = 0; runPointer.next != null; i++) {
 			if(index == i) {
 				runPointer.maschine = maschine;
@@ -151,6 +162,29 @@ public class Maschinenliste implements Iterable<Maschine> {
 			}
 			prevNode = runPointer;
 			runPointer = runPointer.next;
+		}
+	}
+	
+	/**
+	 * itieriert über die gesamte Liste und entfernt ALLE Knoten,
+	 * deren Maschine mit der angegebenen Maschine @param m übereinstimmen
+	 */
+	public void remove(Maschine m) {
+		if(isEmpty()) throw new NoSuchElementException();
+		
+		Node runPointer = first;
+		
+		// spezialfall index 0
+		if(first.maschine.equals(m)) {
+			first = first.next;
+			currentSize--;
+		}
+		
+		while(runPointer.next != null) {
+			if(runPointer.next.maschine != null && runPointer.next.maschine.equals(m)) {
+				runPointer.next = runPointer.next.next;
+				currentSize--;
+			}
 		}
 	}
 	

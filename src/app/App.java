@@ -21,6 +21,15 @@ public class App {
 		// Fabrik
 		Fabrik holz = new Fabrik(new Warenspeicher(), 1001.0, "Holz");
 
+		Erzeuger e = new Erzeuger("erz1", 10.0, new Produkt("t1", 1.0, 5.0));
+		holz.getMaschine().addFirst(e);
+		System.out.println("Maschine anlegen: " + holz.getMaschine().getFirst().getName() + "hinzugefuegt.");
+		System.out.println("Size: " + holz.getMaschine().size() );
+		holz.getMaschine().remove(e);
+		System.out.println("Size: " + holz.getMaschine().size() );
+
+		
+		
 		PanelManager pm = new PanelManager(holz);
 		pm.start();
 		

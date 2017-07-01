@@ -99,14 +99,14 @@ public class PanelManager {
 			if(maschinenEntwuerfe.get(i).getName().equals(maschine.getName())) {
 				//maschinenEntwuerfe.add(i, maschine);
 				maschinenEntwuerfe.set(i, maschine);
-				System.out.println(maschinenEntwuerfe.get(i).toString() + " (PanelManager2.1)");
+				//System.out.println(maschinenEntwuerfe.get(i).toString() + " (PanelManager2.1)");
 				contains = true;
 				break;
 			}
 		}
 		
 		if( !contains )	maschinenEntwuerfe.addLast(maschine);
-		System.out.println(maschinenEntwuerfe.getFirst().toString() + " (PanelManager2.2)");
+		//System.out.println(maschinenEntwuerfe.get(0).toString() + " (PanelManager2.2)");
 		
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();

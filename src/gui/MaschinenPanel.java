@@ -55,14 +55,13 @@ public class MaschinenPanel extends JPanel {
 			Erzeuger e = null;
 			Maschine m = null;
 			
-			System.out.println("Groesse: " + panelManager.getMaschinenEntwuerfe().size());
+			//System.out.println("Groesse: " + panelManager.getMaschinenEntwuerfe().size());
 			m = panelManager.getMaschinenEntwuerfe().get(i);
-			System.out.println(m.toString() + " (MaschinenPanel)");
+			//System.out.println(m.toString() + " (MaschinenPanel)");
 			
 			try {
 				e = (Erzeuger) m;
 			} catch (NoSuchElementException ex) {
-				System.out.println("Kein erzeuger vorhanden - WTF");
 				return;
 			}
 			

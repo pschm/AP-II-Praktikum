@@ -63,6 +63,7 @@ public class InputPanel extends JPanel {
 	private JButton btn_sortAblauf  = new JButton("Fabrik sortieren (Ablauf)");
 	private JButton btn_fabrikStart = new JButton("Test starten");
 	private JButton btn_fabrikReset = new JButton("Fabrik zurücksetzen");
+	private JButton btn_removeerz1	= new JButton("Remove erz1");
 	
 	public InputPanel(PanelManager panelManager) {
 		this.panelManager = panelManager;
@@ -91,7 +92,8 @@ public class InputPanel extends JPanel {
 		
 		// Maschine
 		add(l_ueberschriftMaschine);
-		add(new JLabel(" "));
+		//add(new JLabel(" "));
+		add(btn_removeerz1);
 		add(l_maschinenName);
 		add(tf_maschinenName);
 		add(l_maschinenKosten);
@@ -174,7 +176,7 @@ public class InputPanel extends JPanel {
 				System.out.println(m.toString() + " (InputPanel)");
 				
 				panelManager.addOrReplaceMaschinenentwurf(m);
-				System.out.println(panelManager.getMaschinenEntwuerfe().get(0).toString() + " (Inputpanel 2)");
+				//System.out.println(panelManager.getMaschinenEntwuerfe().get(0).toString() + " (Inputpanel 2)");
 			}
 		});
 		
@@ -208,6 +210,13 @@ public class InputPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelManager.resetFabrik();
+			}
+		});
+		
+		btn_removeerz1.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelManager.getAktiveMaschinen().remove(new Erzeuger("erz1", 10.0, new Produkt("t1", 1, 10)));
 			}
 		});
 		
