@@ -167,7 +167,7 @@ public class Maschinenliste implements Iterable<Maschine> {
 	
 	/**
 	 * itieriert über die gesamte Liste und entfernt ALLE Knoten,
-	 * deren Maschine mit der angegebenen Maschine @param m übereinstimmen
+	 * deren Maschine mit der angegebenen Maschine @param m übereinstimmen.
 	 */
 	public void remove(Maschine m) {
 		if(isEmpty()) throw new NoSuchElementException();
