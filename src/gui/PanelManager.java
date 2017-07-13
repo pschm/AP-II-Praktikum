@@ -54,7 +54,7 @@ public class PanelManager {
 		
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.add(inputPanel, BorderLayout.WEST);
-		mainFrame.add(maschinenPanel, BorderLayout.EAST);
+		mainFrame.add(maschinenPanel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JFrame selectionFrame = new JFrame();
@@ -97,16 +97,13 @@ public class PanelManager {
 		
 		for(int i = 0; i < maschinenEntwuerfe.size(); i++) {
 			if(maschinenEntwuerfe.get(i).getName().equals(maschine.getName())) {
-				//maschinenEntwuerfe.add(i, maschine);
 				maschinenEntwuerfe.set(i, maschine);
-				//System.out.println(maschinenEntwuerfe.get(i).toString() + " (PanelManager2.1)");
 				contains = true;
 				break;
 			}
 		}
 		
 		if( !contains )	maschinenEntwuerfe.addLast(maschine);
-		//System.out.println(maschinenEntwuerfe.get(0).toString() + " (PanelManager2.2)");
 		
 		maschinenPanel.updateData();
 		maschinenPanel.repaint();

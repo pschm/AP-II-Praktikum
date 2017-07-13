@@ -36,7 +36,7 @@ public class AblaufComparator implements Comparator<Maschine> {
 			Verwerter v2 = (Verwerter) o2;
 
 			if(v1.getAbhaenigkeit().equals(v2.getErzeugnis())) {
-				return 1; // o1 ist von o2 Abhaengig
+				return 1;  // o1 ist von o2 Abhaengig
 			} else if(v2.getAbhaenigkeit().equals(v1.getErzeugnis())) {
 				return -1; // o2 ist von o1 Abhaengig
 			}

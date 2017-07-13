@@ -84,7 +84,8 @@ public class Fabrik {
 	}
 	
 	public void sort(Comparator<Maschine> comp) {
-		maschine.sort(comp);
+		//maschine.sort(comp);
+		maschine.quickSort(comp);
 	}
 	
 	/**

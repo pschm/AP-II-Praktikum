@@ -46,16 +46,26 @@ public class Verwerter extends Erzeuger {
 	 */
 	@Override
 	public void produktErzeugen() {
+		double kosten = 0;
+		
 		if(!this.checkAbhaengigkeit()) {
 			System.out.println("Es sind nicht genuegend " + abhaenigkeit.getName() + " im Speicher vorhanden.");
-			System.out.println(erzeugnis.getName() + " konnte nicht hergestellt werden.");
-			return;
+			// System.out.println(erzeugnis.getName() + " konnte nicht hergestellt werden.");
+			
+			// Fehlende Produkte berechnen: anzahl <= fabrik.getWarenspeicher().anzahlImSpeicher(abhaenigkeit);
+			int fehlendeProdukte = anzahl - fabrik.getWarenspeicher().anzahlImSpeicher(abhaenigkeit);
+			System.out.println("Es mussten " + fehlendeProdukte + " fuer die Produktion eingekauft werden.");
+			
+			// Kosten für die herstellung berechnen:
+			kosten = abhaenigkeit.getKosten() * 2 * fehlendeProdukte;
+			
+			// return;
 		}
 		
 		fabrik.getWarenspeicher().entferneProdukt(abhaenigkeit, anzahl); 
 		
 		// guthaben verringern
-		fabrik.testguthabenReduzieren(erzeugnis.getKosten());
+		fabrik.testguthabenReduzieren(erzeugnis.getKosten() + kosten);
 		
 		super.produktErzeugen();
 	}

@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -64,6 +65,20 @@ public class AuswahlPanel extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					panelManager.removeMaschineFromFabrik(index);
 					repaint();
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					maschinenDaten.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+					//maschinenDaten.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					//maschinenDaten.setBorder(BorderFactory.createLineBorder(Color.RED));
+					maschinenDaten.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}
 			});
 			

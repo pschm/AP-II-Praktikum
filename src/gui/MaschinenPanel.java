@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.NoSuchElementException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+
 import app.Erzeuger;
 import app.Maschine;
 import app.Produkt;
@@ -114,10 +118,25 @@ public class MaschinenPanel extends JPanel {
 			maschinenPanel.add(abhaengigkeitsDaten);
 			
 			final int index = i; // sonst meckert der Mouse listener
+			
 			maschinenPanel.addMouseListener( new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					panelManager.addMaschineToFabrik(index);
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					maschinenPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+					//maschinenDaten.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					//maschinenDaten.setBorder(BorderFactory.createLineBorder(Color.RED));
+					maschinenPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}
 			});
 			
